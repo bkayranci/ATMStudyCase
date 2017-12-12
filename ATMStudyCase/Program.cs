@@ -10,6 +10,8 @@ namespace ATMStudyCase
     {
         static void Main(string[] args)
         {
+            ATM theATM = new ATM();
+            theATM.Run();
         }
     }
 }
