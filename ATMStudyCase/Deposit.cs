@@ -30,7 +30,7 @@ namespace ATMStudyCase
                 UserScreen.DisplayDollarAmount(amount);
                 UserScreen.DisplayMessageLine(" in the deposit slot.");
 
-                bool envelopeReceived = depositSlot.IsDepositEnvelopeReceived();
+                bool envelopeReceived = depositSlot.IsDepositEnvelopeReceived(amount);
 
                 if (envelopeReceived)
                 {

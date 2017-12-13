@@ -26,7 +26,7 @@
             Account account = GetAccount(userAccountNumber);
 
             if (account != null)
-                account.Debit(amount);
+                account.Credit(amount);
         }
 
         public void Debit(int userAccountNumber, decimal amount)
@@ -34,7 +34,7 @@
             Account account = GetAccount(userAccountNumber);
 
             if (account != null)
-                account.Credit(amount);
+                account.Debit(amount);
         }
 
         // eger verilen account bulunamazsa null doner

@@ -14,7 +14,7 @@
         {
             billCount = billCount - (int)(amount / 20);
         }
-
+        
         public bool IsSufficiantCashAvaible(decimal amount)
         {
             return (billCount >= (amount / 20)) ? true : false;

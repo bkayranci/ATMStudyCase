@@ -2,9 +2,11 @@
 {
     class DepositSlot
     {
-        public bool IsDepositEnvelopeReceived()
+        public const decimal avaibleSlot = 10000;
+
+        public bool IsDepositEnvelopeReceived(decimal val)
         {
-            return true;
+            return (val <= avaibleSlot) ? true : false;
         }
     }
 }

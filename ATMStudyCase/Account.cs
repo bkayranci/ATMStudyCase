@@ -18,6 +18,7 @@
         public void Credit(decimal amount)
         {
             TotalBalance += amount;
+            AvaibleBalance += amount;
         }
 
         public void Debit(decimal amount)

@@ -42,11 +42,15 @@ namespace ATMStudyCase
 
             while (isContinue)
             {
-
-                if (DisplayMenu())
+                int display = DisplayMenu();
+                if (display == 1)
                 {
                     UserScreen.DisplayMessageLine("\nOperation success!");
                     isContinue = DoYouWantToContinue();
+                }
+                else if (display == 2)
+                {
+                    isContinue = false;
                 }
                 else
                 {
@@ -61,10 +65,10 @@ namespace ATMStudyCase
         {
             UserScreen.DisplayMessageLine("If you want to continue, press for 1.");
 
-            return (keypad.GetInput() == 1) ? true : false;
+            return (keypad.GetInput(true) == 1) ? true : false;
         }
 
-        private bool DisplayMenu()
+        private int DisplayMenu()
         {
             UserScreen.Clear();
             UserScreen.DisplayMessageLine("\nWithdrawal Menu\n");
@@ -91,15 +95,15 @@ namespace ATMStudyCase
                     UserScreen.DisplayMessage("\nEnter a value: ");
                     return IsWithrawal(keypad.GetInput());
                 case (int)Menu.GO_BACK:
-                    return false;
+                    return 2;
                 default:
                     UserScreen.DisplayMessageLine("\nInvalid selection! Try again.");
                     break;
             }
-            return false;
+            return 0;
         }
 
-        private bool IsWithrawal(int val)
+        private int IsWithrawal(int val)
         {
             if (val <= Database.getAvaibleBalance(AccountNumber))
             {
@@ -107,11 +111,11 @@ namespace ATMStudyCase
                 {
                     Database.Debit(AccountNumber, val);
                     cashDispenser.DispenseCash(val);
-                    return true;
+                    return 1;
                 }
             }
 
-            return false;
+            return 0;
         }
     }
 }

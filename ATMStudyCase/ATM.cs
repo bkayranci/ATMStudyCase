@@ -93,11 +93,12 @@ namespace ATMStudyCase
                     case MenuOption.WITHDRAWAL:
                         transaction = CreateTransaction(MenuOption.WITHDRAWAL);
                         transaction.Execute();
-                        screen.Back();
+                        
                         break;
                     case MenuOption.DEPOSIT:
                         transaction = CreateTransaction(MenuOption.DEPOSIT);
                         transaction.Execute();
+                        screen.Back();
                         break;
                     case MenuOption.EXIT_ATM:
                         userExited = true;

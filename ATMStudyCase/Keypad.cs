@@ -2,7 +2,7 @@
 {
     class Keypad
     {
-        public int GetInput()
+        public int GetInput(bool isOneMoreTime = false)
         {
 
             string cStr;
@@ -11,6 +11,11 @@
 
             do
             {
+                if (isOneMoreTime && isMoreTry)
+                {
+                    return result;
+                }
+
                 if (isMoreTry)
                 {
                     System.Console.WriteLine("ERROR: input must be an integer value! Try again.");
