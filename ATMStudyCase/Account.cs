@@ -27,6 +27,7 @@
             TotalBalance -= amount;
         }
 
+        // account pin dogrulama
         public bool ValidatePin(int userPin)
         {
             return (Pin == userPin) ? true : false;

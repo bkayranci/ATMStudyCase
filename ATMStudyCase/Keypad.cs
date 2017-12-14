@@ -11,6 +11,7 @@
 
             do
             {
+                // eger isOneMoreTime true is herhangi bir tusa bastigini belli etmek icin ekledim
                 if (isOneMoreTime && isMoreTry)
                 {
                     return result;

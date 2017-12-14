@@ -42,6 +42,7 @@ namespace ATMStudyCase
             screen.DisplayMessageLine("Enter your PIN: ");
             int pin = keypad.GetInput();
 
+            // giris yaparsa hesap numarasini al
             userAuthenticated = bankDatabase.AuthenticateUser(accountNumber, pin);
 
             if (userAuthenticated)
@@ -54,6 +55,7 @@ namespace ATMStudyCase
             }
         }
 
+        // islem olustur
         private Transaction CreateTransaction(MenuOption type)
         {
             Transaction temp = null;
@@ -76,6 +78,7 @@ namespace ATMStudyCase
             return temp;
         }
 
+        // islemi gerceklestir
         private void PerformTransaction()
         {
             Transaction transaction = null;
@@ -98,7 +101,6 @@ namespace ATMStudyCase
                     case MenuOption.DEPOSIT:
                         transaction = CreateTransaction(MenuOption.DEPOSIT);
                         transaction.Execute();
-                        screen.Back();
                         break;
                     case MenuOption.EXIT_ATM:
                         userExited = true;
@@ -113,13 +115,17 @@ namespace ATMStudyCase
 
         }
 
+        // main menu secenegini dondur
         private MenuOption DisplayMainMenu()
         {
             screen.Clear();
-            screen.DisplayMessageLine("1- Balance Inquiry");
-            screen.DisplayMessageLine("2- Withdrawal");
-            screen.DisplayMessageLine("3- Deposit");
-            screen.DisplayMessageLine("4- Exit ATM");
+            screen.DisplayMessageLine("\nMain menu\n");
+            screen.DisplayMessageLine("1- View my balance");
+            screen.DisplayMessageLine("2- Withdraw cash");
+            screen.DisplayMessageLine("3- Deposit funds");
+            screen.DisplayMessageLine("4- Exit");
+
+            screen.DisplayMessageLine("\nEnter a choice: ");
 
             switch (keypad.GetInput())
             {
@@ -145,8 +151,10 @@ namespace ATMStudyCase
                     AuthenticateUser();
                 }
 
+                // islem gerceklestir
                 PerformTransaction();
 
+                // cikis yap
                 userAuthenticated = false;
                 currentAccountNumber = 0;
                 screen.DisplayMessageLine("Good Bye!");

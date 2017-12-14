@@ -21,6 +21,7 @@ namespace ATMStudyCase
             decimal avaibleBalance = bankDatabase.getAvaibleBalance(AccountNumber);
             decimal totalBalance = bankDatabase.getTotalBalance(AccountNumber);
 
+            // hesaptaki bilgileri ekrana yazar
             screen.DisplayMessage("\nAvaible Balance: ");
             screen.DisplayDollarAmount(avaibleBalance);
             screen.DisplayMessage("\nTotal Balance: ");

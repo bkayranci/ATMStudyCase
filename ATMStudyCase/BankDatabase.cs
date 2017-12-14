@@ -6,6 +6,7 @@
 
         public BankDatabase()
         {
+            // asagidaki 5 hesap kullanir
             accounts = new Account[5];
             accounts[0] = new Account(1, 1, 10000, 100000);
             accounts[1] = new Account(2, 2, 20000, 200000);
@@ -18,6 +19,7 @@
         {
             Account account = GetAccount(userAccountNumber);
 
+            // eger account bulunursa dogrula
             return (account != null) ? account.ValidatePin(userPin) : false;
         }
 
@@ -25,6 +27,7 @@
         {
             Account account = GetAccount(userAccountNumber);
 
+            // para duser -> para cekme
             if (account != null)
                 account.Credit(amount);
         }
@@ -32,7 +35,7 @@
         public void Debit(int userAccountNumber, decimal amount)
         {
             Account account = GetAccount(userAccountNumber);
-
+            // para artar -> para yatirma
             if (account != null)
                 account.Debit(amount);
         }

@@ -26,42 +26,51 @@ namespace ATMStudyCase
 
             if (amount != CANCELLED)
             {
-                UserScreen.DisplayMessage("\nPlease insert a deposit envelope containing ");
-                UserScreen.DisplayDollarAmount(amount);
-                UserScreen.DisplayMessageLine(" in the deposit slot.");
-
+                // tek seferde yatirilabilecek miktar
                 bool envelopeReceived = depositSlot.IsDepositEnvelopeReceived(amount);
 
                 if (envelopeReceived)
                 {
-                    UserScreen.DisplayMessageLine(
-                        "\nYour envelope has been received.\n" +
-                        "The money just deposited will not be avaible" +
-                        "until we \nverify the amount of any" +
-                        "enclosed cash, and any enclosed check clear."
-                        );
-                    Database.Credit(AccountNumber, amount);
+                    UserScreen.DisplayMessageLine("\nAmount: " + amount);
+                    UserScreen.DisplayMessageLine("\nPress for 1 to cancel. Press enter for continue.");
+
+                    // yatirmak icin engel yok yatirmak icin onayla
+                    if (keypad.GetInput(true) != 1)
+                    {
+                        Database.Credit(AccountNumber, amount);
+                        UserScreen.DisplayMessageLine("\nDeposit operation success");
+                        UserScreen.Sleep(4000);
+                    }
+                    else
+                    {
+                        UserScreen.DisplayMessageLine("\nOperation cancelled!");
+                        UserScreen.Sleep(4000);
+                    }
+                    
                 }
                 else
                 {
                     UserScreen.DisplayMessageLine(
-                        "\nYou did not insert an envelope, so the ATM has " +
-                        "cancelled your transaction."
+                        "\nSlot is not enough. Operation cancelled!"
                         );
+                    UserScreen.Sleep(4000);
                 }
             }
             else
             {
                 UserScreen.DisplayMessageLine(
-                    "\nCancelling transaction..."
+                    "\nCancelling operation..."
                     );
+                UserScreen.Sleep(4000);
+                UserScreen.Sleep(2000);
             }
         }
 
+        // yatirilacak parayi gir
         private decimal PromptForDepositAmount()
         {
             UserScreen.DisplayMessage(
-                "\nPlease input a deposit amount in CENTS (or 0 to cancel): "
+                "\nEnter amount for deposit (or 0 to cancel): "
                 );
 
             int input = keypad.GetInput();

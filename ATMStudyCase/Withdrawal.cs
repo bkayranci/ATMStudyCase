@@ -8,7 +8,9 @@ namespace ATMStudyCase
 {
     class Withdrawal : Transaction
     {
+        // kullanmaya gerek kalmadi
         private decimal amount;
+
         private const int CANCELLED = 6;
         private CashDispenser cashDispenser;
         private Keypad keypad;
@@ -32,7 +34,7 @@ namespace ATMStudyCase
             keypad = atmKeypad;
             cashDispenser = atmCashDispenser;
         }
-
+        // islem yap
         public override void Execute()
         {
             BankDatabase bankDatabase = Database;
@@ -42,25 +44,20 @@ namespace ATMStudyCase
 
             while (isContinue)
             {
-                int display = DisplayMenu();
-                if (display == 1)
+                bool display = DisplayMenu();
+                if (display == true)
                 {
                     UserScreen.DisplayMessageLine("\nOperation success!");
                     isContinue = DoYouWantToContinue();
                 }
-                else if (display == 2)
+                else if (display == false)
                 {
                     isContinue = false;
-                }
-                else
-                {
-                    UserScreen.DisplayMessage("\nERROR: your avaible balance: ");
-                    UserScreen.DisplayDollarAmount(Database.getAvaibleBalance(AccountNumber));
-                    UserScreen.Sleep(2000);
                 }
             }
         }
 
+        // devam etmek istiyor musun
         private bool DoYouWantToContinue()
         {
             UserScreen.DisplayMessageLine("If you want to continue, press for 1.");
@@ -68,10 +65,10 @@ namespace ATMStudyCase
             return (keypad.GetInput(true) == 1) ? true : false;
         }
 
-        private int DisplayMenu()
+        private bool DisplayMenu()
         {
             UserScreen.Clear();
-            UserScreen.DisplayMessageLine("\nWithdrawal Menu\n");
+            UserScreen.DisplayMessageLine("\nWithdrawal menu\n");
             UserScreen.DisplayMessageLine("1->\t$10");
             UserScreen.DisplayMessageLine("2->\t$20");
             UserScreen.DisplayMessageLine("3->\t$50");
@@ -80,7 +77,8 @@ namespace ATMStudyCase
             UserScreen.DisplayMessageLine("6->\t$500");
             UserScreen.DisplayMessageLine("7->\t2000");
             UserScreen.DisplayMessageLine("8->\tOther");
-            UserScreen.DisplayMessageLine("9->\tGo Back");
+            UserScreen.DisplayMessageLine("9->\tCancel transaction");
+            UserScreen.DisplayMessage("\nChoose a with drawal amount: ");
 
             switch (keypad.GetInput())
             {
@@ -95,27 +93,42 @@ namespace ATMStudyCase
                     UserScreen.DisplayMessage("\nEnter a value: ");
                     return IsWithrawal(keypad.GetInput());
                 case (int)Menu.GO_BACK:
-                    return 2;
+                    return false;
                 default:
                     UserScreen.DisplayMessageLine("\nInvalid selection! Try again.");
                     break;
             }
-            return 0;
+            return false;
         }
 
-        private int IsWithrawal(int val)
+        // islem yapilabiliyor mu
+        private bool IsWithrawal(int val)
         {
+            // cekebilecegin para var mi?
             if (val <= Database.getAvaibleBalance(AccountNumber))
             {
+                // ATM de para var mi
                 if (cashDispenser.IsSufficiantCashAvaible(val))
                 {
                     Database.Debit(AccountNumber, val);
                     cashDispenser.DispenseCash(val);
-                    return 1;
+                    return true;
+                }
+                else
+                {
+                    UserScreen.DisplayMessageLine("ERROR: money in ATM is not enough!");
+                    UserScreen.Sleep(3000);
                 }
             }
+            else
+            {
+                UserScreen.DisplayMessage("\nERROR: your avaible balance: ");
+                UserScreen.DisplayDollarAmount(Database.getAvaibleBalance(AccountNumber));
+                UserScreen.Sleep(2000);
+                
+            }
 
-            return 0;
+            return false;
         }
     }
 }

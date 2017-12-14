@@ -3,7 +3,7 @@
     class CashDispenser
     {
         private int billCount;
-        private const int INITIAL_COUNT = 20000;
+        private const int INITIAL_COUNT = 50000;
 
         public CashDispenser()
         {
@@ -12,12 +12,12 @@
 
         public void DispenseCash(decimal amount)
         {
-            billCount = billCount - (int)(amount / 20);
+            billCount = billCount - (int)amount;
         }
         
         public bool IsSufficiantCashAvaible(decimal amount)
         {
-            return (billCount >= (amount / 20)) ? true : false;
+            return (billCount >= amount) ? true : false;
         }
 
     }
